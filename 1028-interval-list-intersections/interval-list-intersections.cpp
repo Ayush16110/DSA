@@ -9,12 +9,18 @@ public:
             if (firstList[i][0] <= secondList[j][1] &&
                 secondList[j][0] <= firstList[i][1]) {
                 // overlapping then only find intersection
-                ans.push_back({max(firstList[i][0], secondList[j][0]), min(firstList[i][1], secondList[j][1])});
+                int start = max(firstList[i][0], secondList[j][0]);
+                int end = min(firstList[i][1], secondList[j][1]);
+
+                if (start <= end) {
+                    ans.push_back({start, end});
+                }
             }
             // increment whose end is smaller
             if (firstList[i][1] <= secondList[j][1]) {
                 i++;
-            } else j++;
+            } else
+                j++;
         }
 
         return ans;
