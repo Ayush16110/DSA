@@ -1,15 +1,13 @@
 class Solution {
 public:
     vector<int> corpFlightBookings(vector<vector<int>>& bookings, int n) {
-        vector<int> ans(n, 0);
+        vector<int> ans (n, 0);
 
-        for(int i = 0; i < bookings.size(); i++) {
-            int l = bookings[i][0];
-            int r = bookings[i][1];
-            int s = bookings[i][2];
+        for(auto &b : bookings) {
+            int l = b[0], r = b[1], x = b[2];
 
-            ans[l-1] += s;
-            if(r < n) ans[r] -= s;
+            ans[l-1] += x;
+            if(r < n) ans[r] -= x;
         }
 
         for(int i = 1; i < n; i++) {
