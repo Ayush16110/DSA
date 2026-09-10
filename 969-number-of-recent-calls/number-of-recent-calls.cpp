@@ -5,12 +5,12 @@ public:
     RecentCounter() {}
     
     int ping(int t) {
-        this->q.push(t);
-        while(!this->q.empty() && this->q.front() < t - 3000) {
+        q.push(t);
+        while(!q.empty() && q.front() < t - 3000) {
             q.pop();
         }
 
-        return this->q.size();
+        return q.size();
     }
 };
 
