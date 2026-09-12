@@ -1,17 +1,17 @@
 class Solution {
 public:
     string removeDuplicateLetters(string s) {
-        unordered_map<char, int> lastOcc;
+        vector<int> lastOcc(26, 0);
         string st;
         vector<bool> present(26, 0);
 
         for(int i = 0; i < s.length(); i++) {
-            lastOcc[s[i]] = i;
+            lastOcc[s[i] - 'a'] = i;
         }
 
         for(int i = 0; i < s.length(); i++) {
             if(present[s[i] - 'a'] == 1) continue;
-            while(!st.empty() and st.back() > s[i] and i < lastOcc[st.back()]) {
+            while(!st.empty() and st.back() > s[i] and i < lastOcc[st.back() - 'a']) {
                 present[st.back() - 'a'] = 0;
                 st.pop_back();
             }
