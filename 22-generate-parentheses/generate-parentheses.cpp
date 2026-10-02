@@ -7,10 +7,7 @@ private:
             ans.push_back(track);
             return;
         }
-
-        // open bracket
         helper(n - 1, track + '(', currentlyOpened + 1);
-        // resolve previous one if exists
         if(currentlyOpened > 0) helper(n, track + ')', currentlyOpened - 1);
     }
 public:
