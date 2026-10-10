@@ -50,7 +50,7 @@ public:
             if(curr == nullptr) {
                 curr = nextLevelStart;
                 nextLevelStart = nullptr;
-                prev == nullptr;
+                prev = nullptr;
             }
         }
 
