@@ -26,7 +26,7 @@ public:
     int next() {
         TreeNode* node = s.top();
         s.pop();
-        pushToStack(node->right);
+        if(node->right) pushToStack(node->right);
         return node->val;
     }
 
