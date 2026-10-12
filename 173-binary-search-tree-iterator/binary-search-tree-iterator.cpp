@@ -14,6 +14,8 @@ class BSTIterator {
 private:
     stack<TreeNode*> s;
     void pushToStack(TreeNode* node) {
+        if (node == nullptr)
+            return;
         while (node != nullptr) {
             s.push(node);
             node = node->left;
@@ -26,7 +28,9 @@ public:
     int next() {
         TreeNode* node = s.top();
         s.pop();
-        if(node->right) pushToStack(node->right);
+
+        if (node->right)
+            pushToStack(node->right);
         return node->val;
     }
 
