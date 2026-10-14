@@ -16,7 +16,7 @@ public:
     bool findTarget(TreeNode* root, int k) {
         if(root == nullptr) return false;
         if(findTarget(root->left, k)) return true;
-        if(m.find(k - root->val) != nullptr) return true;
+        if(m.find(k - root->val) != m.end()) return true;
         m[root->val] = root;
         if(findTarget(root->right, k)) return true;
         return false;
