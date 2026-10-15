@@ -21,30 +21,28 @@
  */
 class Solution {
 private:
-    TreeNode* solve(ListNode* list, int start, int end) {
+    TreeNode* solve(vector<TreeNode*>& inorder, int start, int end) {
         if(start > end) return nullptr;
         int mid = start + (end - start)/2;
-        ListNode* curr = list;
-        int count = 0;
-        while(count < mid and curr != nullptr and curr->next != nullptr) {
-            curr = curr->next;
-            count++;
-        }
-        TreeNode* node = new TreeNode(curr->val);
-        node->left = solve(list, start, mid - 1);
-        node->right = solve(list, mid + 1, end);
+        TreeNode* node = inorder[mid];
+        node->left = solve(inorder, start, mid - 1);
+        node->right = solve(inorder, mid + 1, end);
         return node;
     }
 public:
     TreeNode* sortedListToBST(ListNode* head) {
         if(head == nullptr) return nullptr;
-        int start = 0;
-        int end = 0;
+        vector<TreeNode*> inorder;
         ListNode* curr = head;
-        while(curr->next != nullptr) {
+        while(curr != nullptr) {
+            TreeNode* node = new TreeNode(curr->val);
+            inorder.push_back(node);
             curr = curr->next;
-            end++;
         }
-        return solve(head, start, end);
+
+        int start = 0;
+        int end = inorder.size() - 1;
+        TreeNode* root = solve(inorder, start, end);
+        return root;
     }
 };
