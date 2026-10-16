@@ -6,43 +6,51 @@
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
  * };
  */
 class Solution {
 private:
-    vector<int> inorder, ans;
-
-    void getInorder(TreeNode* node) {
-        if(node == nullptr) return;
-        getInorder(node->left);
-        inorder.push_back(node->val);
-        getInorder(node->right);
-    }
-
-    void mergeSortedArray(vector<int>& inorder1, vector<int>& inorder2) {
-        int i = 0, j = 0;
-        while(i < inorder1.size() and j < inorder2.size()) {
-            if(inorder1[i] < inorder2[j]) {
-                ans.push_back(inorder1[i++]);
-            } else {
-                ans.push_back(inorder2[j++]);
-            }
+    void pushLeft(TreeNode* node, stack<TreeNode*>& s) {
+        while (node != nullptr) {
+            s.push(node);
+            node = node->left;
         }
-
-        while(i < inorder1.size()) ans.push_back(inorder1[i++]);
-        while(j < inorder2.size()) ans.push_back(inorder2[j++]);
-        return;
     }
+
+    int next(stack<TreeNode*>& s) {
+        TreeNode* temp = s.top();
+        s.pop();
+        pushLeft(temp->right, s);
+        return temp->val;
+    }
+
+    bool hasNext(stack<TreeNode*>& s) { return !s.empty(); }
 
 public:
     vector<int> getAllElements(TreeNode* root1, TreeNode* root2) {
-        getInorder(root1);
-        vector<int> inorder1 = inorder;
-        inorder.clear();
-        getInorder(root2);
-        vector<int> inorder2 = inorder;
-        mergeSortedArray(inorder1, inorder2);
+        stack<TreeNode*> s1, s2;
+        pushLeft(root1, s1);
+        pushLeft(root2, s2);
+        vector<int> ans;
+
+        while (hasNext(s1) && hasNext(s2)) {
+            if (s1.top()->val < s2.top()->val) {
+                ans.push_back(next(s1));
+            } else {
+                ans.push_back(next(s2));
+            }
+        }
+
+        while (hasNext(s1)) {
+            ans.push_back(next(s1));
+        }
+
+        while (hasNext(s2)) {
+            ans.push_back(next(s2));
+        }
+
         return ans;
     }
 };
