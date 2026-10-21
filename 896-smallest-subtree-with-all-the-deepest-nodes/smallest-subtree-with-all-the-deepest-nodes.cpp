@@ -11,22 +11,21 @@
  */
 class Solution {
 private:
-    TreeNode* ans = nullptr;
-    int solve(TreeNode* node) {
-        if(node == nullptr) return 0;
-        int leftDepth = solve(node->left);
-        int rightDepth = solve(node->right);
+    pair<TreeNode*, int> solve(TreeNode* node) {
+        if(node == nullptr) return {nullptr, 0};
+        auto [leftNode, leftDepth] = solve(node->left);
+        auto [rightNode, rightDepth] = solve(node->right);
+        TreeNode* ans = node;
         if(leftDepth > rightDepth) {
-            solve(node->left);
+            ans = leftNode;
         } else if(leftDepth < rightDepth) {
-            solve(node->right);
-        } else ans = node;
-        return 1 + max(leftDepth, rightDepth);
+            ans = rightNode;
+        }
+        return {ans, 1 + max(leftDepth, rightDepth)} ;
     }
 public:
     TreeNode* subtreeWithAllDeepest(TreeNode* root) {
-        this->ans = root;
-        solve(root);
+        auto [ans, depth] = solve(root);
         return ans;
     }
 };
