@@ -1,14 +1,14 @@
 class KthLargest {
 private:
     priority_queue<int, vector<int>, greater<int>> pq;
-    int k;
+    int k = 0;
 public:
     KthLargest(int k, vector<int>& nums) {
-        this->k = k;
         for(int n : nums) {
             pq.push(n);
             while(pq.size() > k) pq.pop();
         }
+        this->k = k;
     }
     
     int add(int val) {
