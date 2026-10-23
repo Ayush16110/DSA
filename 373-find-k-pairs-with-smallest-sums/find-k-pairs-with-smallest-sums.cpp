@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {
-        priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> minHeap;
+        priority_queue<tuple<int, int, int>, vector<tuple<int, int, int>>, greater<tuple<int, int, int>>> minHeap;
         int n = nums1.size();
         int m = nums2.size();
 
@@ -11,7 +11,7 @@ public:
 
         vector<vector<int>> ans;
         while(!minHeap.empty() && ans.size() < k) {
-            int sum = minHeap.top()[0], i = minHeap.top()[1], j = minHeap.top()[2];
+            auto [sum, i, j] = minHeap.top();
             minHeap.pop();
             if(j + 1 < m) minHeap.push({nums1[i] + nums2[j+1], i, j+1});
             ans.push_back({nums1[i], nums2[j]});
