@@ -3,11 +3,11 @@ public:
     int findTheDistanceValue(vector<int>& arr1, vector<int>& arr2, int d) {
         int ans = 0;
         for(int i = 0; i < arr1.size(); i++) {
-            bool isAnyPair = false;
-            for(int j = 0; j < arr2.size(); j++) {
-                if(abs(arr1[i] - arr2[j]) <= d) isAnyPair = true;
+            int j;
+            for(j = 0; j < arr2.size(); j++) {
+                if(abs(arr1[i] - arr2[j]) <= d) break;
             }
-            if(!isAnyPair) ans++;
+            if(j == arr2.size()) ans++;
         }
         return ans;
     }
